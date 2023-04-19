@@ -292,3 +292,98 @@ designed for multi tenancy purposes
 Can deploy ESO in workload cluster and pull from tooling cluster
 or deploy in Tooling cluster and push to workload clusters.
 
+##
+
+### Metrics overview
+
+A metric is a measurememnt about a service captured at runtime. aggregation of multiple measuremments.
+
+#### Golden sinals
+- Throughout
+- Response Time
+- Error rate
+
+####
+- Cpu 
+- Active Users
+- total order
+- orders of a specific item
+
+Why are metrics usefull?
+
+Performance
+Visualization
+Data volume reduction
+Alerts
+
+### What is OTel
+
+Observability framework buiolt on open standard
+
+Mergeing of open census and open tracing in 2019
+
+Aims to standardize instrumention and telemtry generation, collection and ...
+
+Not storage or UI
+
+a set of APIs and SDK.
+
+Instrument once.
+
+### Metrics in OTel
+
+#### API
+
+used to instrument code
+
+- meter provider
+   - meters (scopes)
+      - instruments (measurements)
+
+#### SDK
+
+used to implement the API above
+
+----
+
+Aggregation - combining multiple measurements into a single point.
+
+Temporality - how we aggregate. Cumulative or Delta.
+
+monotonicity - value is always increasing, or always increasing and decreasing.
+
+dimensions - attribute associated with a metric.
+
+cardinality - unique dimensions of a metric. e.g country is lower cardinality than country and city.
+
+A cardinality explosion. some metric persistance will impose cardinality restrictions.
+
+#### Instruments
+
+- name
+- kind
+- unit (opt)
+- description (opt)
+
+Counter -> number of bytes sent, total checkouts. when you want to count things. when the sum is more meaningful than the individual values.
+
+Up/down counter -> number of open connections, active users. when values go up and down (or negative) agregament across dimensions (not guage)
+
+async counter -> cpu time. need a sum, but too expensive syncronously
+
+async Up/down counter -> mem utilization. you need absolute value, not delta. 
+ 
+historgam -> server response times, client duraiton.  analyze the distribution, trends, min,max,avg. (also exponential histograms)
+
+async guage -> cpu, temp, avg mem. when not useful to aggregagate across dimensions. finer grain control.
+
+Sync vs async. Do you want the measurememnt at the time its created, or at a set interval.
+
+instrument types dictate the way in which you can query and analyze the metric.
+
+#### further reading
+
+views api, data point types, push vs pull exporting, app runtime metrics, infra metrics.
+
+
+
